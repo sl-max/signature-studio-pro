@@ -20,8 +20,10 @@ jobs:
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
+        with:
+          cmdline-tools-version: 12266719
 
-      - name: Install Android SDK
+      - name: Install Android SDK packages
         run: sdkmanager "platforms;android-35" "build-tools;35.0.0"
 
       - name: Set up Gradle
@@ -31,7 +33,9 @@ jobs:
 
       - name: Create Android app
         run: |
-          mkdir -p app/src/main/assets app/src/main/java/com/signature/studio
+          mkdir -p app/src/main/assets
+          mkdir -p app/src/main/java/com/signature/studio
+
           cp signature-studio-pro-no-eraser.html app/src/main/assets/index.html
 
           cat > settings.gradle <<'EOF'
@@ -81,6 +85,7 @@ jobs:
           cat > app/src/main/AndroidManifest.xml <<'EOF'
           <manifest xmlns:android="http://schemas.android.com/apk/res/android">
               <uses-permission android:name="android.permission.INTERNET"/>
+
               <application
                   android:theme="@android:style/Theme.Material.Light.NoActionBar"
                   android:label="Signature Studio Pro">
@@ -110,13 +115,19 @@ jobs:
               @Override
               public void onCreate(Bundle savedInstanceState) {
                   super.onCreate(savedInstanceState);
+
                   WebView web = new WebView(this);
-                  web.setLayoutParams(new ViewGroup.LayoutParams(-1, -1));
+                  web.setLayoutParams(
+                      new ViewGroup.LayoutParams(-1, -1)
+                  );
+
                   WebSettings settings = web.getSettings();
                   settings.setJavaScriptEnabled(true);
                   settings.setDomStorageEnabled(true);
+
                   web.setWebViewClient(new WebViewClient());
                   setContentView(web);
+
                   web.loadUrl("file:///android_asset/index.html");
               }
           }
