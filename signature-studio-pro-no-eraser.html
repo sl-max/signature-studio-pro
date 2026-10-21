@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#101827">
+<title>Signature Studio Pro</title>
+<style>
+:root{color-scheme:light;--bg:#f2f5fb;--panel:#fff;--ink:#172033;--muted:#687386;--line:#e1e7f0;--accent:#2563eb;--soft:#edf2fa;--danger:#b42318}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0c1220;--panel:#141d2d;--ink:#edf3ff;--muted:#a5b1c5;--line:#2b384d;--accent:#6695ff;--soft:#202c40;--danger:#ff8a80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;transition:background .2s,color .2s}
+header{background:#101827;color:white;padding:22px 18px 24px}.head{max-width:850px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:12px}.eyebrow{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:#a8c5ff;font-weight:800}h1{font-size:clamp(1.5rem,5vw,2rem);letter-spacing:-.035em;margin:5px 0}.subtitle{margin:0;color:#c3ccda;font-size:.9rem}.theme-btn{border:1px solid #45516a;background:#1c2940;color:#fff;min-height:42px;padding:9px 12px;border-radius:12px;font-weight:700}
+main{width:min(100% - 22px,850px);margin:16px auto 34px}.tabs{display:flex;gap:8px;overflow:auto;padding:2px 1px 12px}.tab{flex:1;white-space:nowrap;background:var(--soft);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:11px 13px;font-weight:750}.tab.active{background:var(--accent);color:white;border-color:var(--accent)}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:15px;box-shadow:0 8px 26px #14213d0a}.panel h2{font-size:1.02rem;margin:0 0 12px}.hint{color:var(--muted);font-size:.8rem;line-height:1.5;margin:10px 1px 0}
+.canvas-wrap{border:1px solid var(--line);border-radius:13px;overflow:hidden;background:#fff}canvas#pad{display:block;width:100%;height:clamp(210px,53vw,330px);touch-action:none;background:#fff}
+.tools{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:17px}.control label{display:block;font-size:.85rem;font-weight:750;margin-bottom:8px}.control input[type=color]{width:100%;height:40px;padding:3px;border:1px solid var(--line);border-radius:10px;background:var(--panel)}input[type=range]{width:100%;accent-color:var(--accent)}.range-info{display:flex;justify-content:space-between;font-size:.8rem;color:var(--muted);gap:8px}.swatches{display:flex;gap:9px;flex-wrap:wrap;margin-top:9px}.swatch{width:27px;height:27px;border-radius:50%;border:2px solid white;box-shadow:0 0 0 1px #aab5c7;padding:0;min-height:27px}.swatch[aria-pressed=true]{box-shadow:0 0 0 2px var(--accent)}
+.actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:17px}button{font:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}button:focus-visible,input:focus-visible{outline:3px solid #93c5fd;outline-offset:2px}.btn{border:0;border-radius:11px;min-height:44px;padding:11px 12px;font-weight:750}.primary{background:var(--accent);color:white}.secondary{background:var(--soft);color:var(--ink);border:1px solid var(--line)}.wide{grid-column:1/-1}.status{min-height:1.3em;margin-top:10px;font-size:.85rem;color:var(--accent)}.section{display:none}.section.active{display:block}.field{width:100%;min-height:44px;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--ink);font:inherit}.row{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.row>*{flex:1}.gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:13px}.saved-card{border:1px solid var(--line);border-radius:13px;padding:10px;min-width:0}.saved-card img{width:100%;height:92px;object-fit:contain;background:#fff;border-radius:8px}.saved-name{font-weight:750;font-size:.9rem;overflow-wrap:anywhere;margin:8px 0}.saved-date{font-size:.74rem;color:var(--muted);margin-bottom:8px}.card-actions{display:flex;gap:6px}.card-actions button{flex:1;min-width:0;padding:8px 5px;font-size:.77rem;min-height:37px}.empty{color:var(--muted);padding:22px 8px;text-align:center;border:1px dashed var(--line);border-radius:12px;margin-top:12px}.pdf-preview{width:100%;min-height:300px;border:1px dashed var(--line);border-radius:12px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--soft);position:relative}.pdf-preview canvas{max-width:100%;height:auto;display:block}.pdf-preview .empty{border:0}.pdf-tools{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}.small-label{font-size:.8rem;color:var(--muted);display:block;margin-bottom:6px}.checkline{display:flex;align-items:center;gap:8px;font-size:.85rem;color:var(--muted);margin-top:10px}.footer{font-size:.76rem;line-height:1.5;color:var(--muted);margin:15px 3px}
+@media(min-width:620px){header{padding:28px 24px}main{margin-top:22px}.panel{padding:21px}.gallery{grid-template-columns:repeat(3,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<header><div class="head"><div><div class="eyebrow">Simple • Private • Professional</div><h1>Signature Studio Pro</h1><p class="subtitle">Draw, save, share and place your signature on a PDF.</p></div><button class="theme-btn" id="themeToggle" type="button">☾ Dark mode</button></div></header>
+<main>
+<nav class="tabs" aria-label="App sections">
+<button class="tab active" data-tab="draw" type="button">✍️ Draw</button>
+<button class="tab" data-tab="saved" type="button">▣ My signatures</button>
+<button class="tab" data-tab="pdf" type="button">▤ PDF signer</button>
+</nav>
+
+<section class="section active" id="section-draw">
+<div class="panel">
+<h2>Draw your signature</h2>
+<div class="canvas-wrap"><canvas id="pad" aria-label="Signature drawing area"></canvas></div>
+<div class="tools">
+<div class="control"><label for="penColor">Pen colour</label><input id="penColor" type="color" value="#172033"><div class="swatches">
+<button class="swatch" data-color="#172033" aria-label="Black" aria-pressed="true" style="background:#172033" type="button"></button>
+<button class="swatch" data-color="#1d4ed8" aria-label="Blue" aria-pressed="false" style="background:#1d4ed8" type="button"></button>
+<button class="swatch" data-color="#dc2626" aria-label="Red" aria-pressed="false" style="background:#dc2626" type="button"></button>
+<button class="swatch" data-color="#15803d" aria-label="Green" aria-pressed="false" style="background:#15803d" type="button"></button>
+</div></div>
+<div class="control"><label for="penSize">Pen thickness</label><div class="range-info"><span>Fine</span><strong id="penSizeValue">3 px</strong><span>Thick</span></div><input id="penSize" type="range" min="1" max="12" value="3"></div>
+</div>
+<div class="actions">
+<button class="btn secondary" id="undoBtn" type="button">↶ Undo</button><button class="btn secondary" id="redoBtn" type="button">↷ Redo</button>
+<button class="btn secondary" id="clearBtn" type="button">Clear all</button>
+<button class="btn secondary" id="saveGalleryBtn" type="button">▣ Save signature</button><button class="btn secondary" id="shareBtn" type="button">↗ Share PNG</button>
+<button class="btn primary wide" id="downloadBtn" type="button">↓ Download transparent PNG</button>
+</div>
+<div class="status" id="drawStatus" role="status" aria-live="polite"></div>
+<p class="hint">Transparent PNG works well on documents. Use “Save signature” to keep a copy in this browser on this device. No account or server upload is used.</p>
+</div>
+</section>
+
+<section class="section" id="section-saved">
+<div class="panel">
+<h2>My signatures</h2>
+<div class="row"><input class="field" id="signatureName" maxlength="50" placeholder="Name this signature (e.g. Work)"><button class="btn primary" id="saveNamedBtn" type="button">Save current</button></div>
+<p class="hint">Saved signatures stay in this browser on this device. Browser storage may be cleared by your device or browser settings.</p>
+<div id="gallery" class="gallery"></div>
+<div id="galleryEmpty" class="empty">No saved signatures yet. Draw one, then tap “Save current”.</div>
+</div>
+</section>
+
+<section class="section" id="section-pdf">
+<div class="panel">
+<h2>Place a signature on a PDF</h2>
+<label class="small-label" for="pdfFile">Choose a PDF from your device</label><input class="field" id="pdfFile" type="file" accept="application/pdf,.pdf">
+<p class="hint">Choose a saved signature below, or draw one first and save it. Then tap the PDF preview to place the signature. Drag it to move; use the size slider to resize.</p>
+<label class="small-label" for="pdfSignature" style="margin-top:14px">Signature to use</label><select class="field" id="pdfSignature"><option value="">Save a signature first</option></select>
+<div class="pdf-preview" id="pdfPreview"><div class="empty">Your PDF preview will appear here.</div></div>
+<div class="pdf-tools">
+<div><label class="small-label" for="pdfPage">Page number</label><input class="field" id="pdfPage" type="number" min="1" value="1"></div>
+<div><label class="small-label" for="pdfSize">Signature size</label><div class="range-info"><span>Small</span><strong id="pdfSizeValue">25%</strong><span>Large</span></div><input id="pdfSize" type="range" min="10" max="65" value="25"></div>
+</div>
+<div class="actions"><button class="btn secondary" id="centerSigBtn" type="button">Center signature</button><button class="btn primary" id="exportPdfBtn" type="button">↓ Export signed PDF</button></div>
+<div class="status" id="pdfStatus" role="status" aria-live="polite"></div>
+<p class="hint">This adds a visible image of your signature to the PDF; it is not a cryptographic certificate or a verified digital signature. PDF tools load from a public CDN and need an internet connection.</p>
+</div>
+</section>
+<p class="footer">Privacy: drawing and local gallery are processed in your browser. PDF export uses PDF libraries loaded from a CDN; your document is processed in this page and is not intentionally uploaded by this app. Avoid using this on shared devices for sensitive documents.</p>
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script>
+(() => {
+'use strict';
+const $ = id => document.getElementById(id);
+const pad = $('pad'), ctx = pad.getContext('2d');
+let ratio = 1, cssW = 0, cssH = 0, strokes = [], redoStack = [], activeStroke = null, drawing = false;
+let penColor = $('penColor').value, penSize = +$('penSize').value;
+let saved = loadSaved(), currentPdfBytes = null, pdfDoc = null, pdfPageCanvas = null, pdfPageNumber = 1;
+let sigX = .5, sigY = .58, sigDragging = false, dragOffset = {x:0,y:0}, pdfPointerDown = null;
+const inkBackground = '#ffffff';
+
+function say(id, msg) { $(id).textContent = msg; }
+function loadSaved() { try { const x = JSON.parse(localStorage.getItem('signatureStudio.saved') || '[]'); return Array.isArray(x) ? x : []; } catch { return []; } }
+function persistSaved() { try { localStorage.setItem('signatureStudio.saved', JSON.stringify(saved)); return true; } catch { return false; } }
+function drawStrokes() {
+  ctx.save(); ctx.setTransform(1,0,0,1,0,0); ctx.clearRect(0,0,pad.width,pad.height); ctx.fillStyle = inkBackground; ctx.fillRect(0,0,pad.width,pad.height); ctx.restore();
+  ctx.setTransform(ratio,0,0,ratio,0,0);
+  for (const s of strokes) {
+    if (!s.points.length) continue;
+    ctx.beginPath(); ctx.lineCap='round'; ctx.lineJoin='round'; ctx.strokeStyle=s.erase ? inkBackground : s.color; ctx.lineWidth=s.width; ctx.moveTo(s.points[0].x,s.points[0].y);
+    for (let i=1;i<s.points.length;i++) ctx.lineTo(s.points[i].x,s.points[i].y);
+    if (s.points.length===1) ctx.lineTo(s.points[0].x+.01,s.points[0].y+.01);
+    ctx.stroke();
+  }
+  updateStatus();
+}
+function updateStatus() { say('drawStatus', strokes.length ? 'Signature ready to save.' : 'Draw your signature with your finger.'); }
+function resizePad() {
+  const rect=pad.getBoundingClientRect(); if (!rect.width||!rect.height) return;
+  const oldW=cssW,oldH=cssH; cssW=rect.width; cssH=rect.height; ratio=Math.max(1,Math.min(devicePixelRatio||1,3));
+  pad.width=Math.round(cssW*ratio); pad.height=Math.round(cssH*ratio);
+  if(oldW&&oldH&&(oldW!==cssW||oldH!==cssH)) {
+    for(const s of strokes) for(const p of s.points){p.x*=cssW/oldW;p.y*=cssH/oldH;}
+  }
+  drawStrokes();
+}
+function pos(e){const r=pad.getBoundingClientRect();return{x:e.clientX-r.left,y:e.clientY-r.top};}
+pad.addEventListener('pointerdown',e=>{
+  if(e.pointerType==='mouse'&&e.button!==0)return;
+  e.preventDefault(); pad.setPointerCapture?.(e.pointerId); drawing=true;
+  const p=pos(e); activeStroke={color:penColor,width:penSize,erase:false,points:[p]}; strokes.push(activeStroke); redoStack=[]; drawStrokes();
+});
+pad.addEventListener('pointermove',e=>{
+  if(!drawing||!activeStroke)return; e.preventDefault(); activeStroke.points.push(pos(e)); drawStrokes();
+});
+function stopDraw(){drawing=false;activeStroke=null;}
+pad.addEventListener('pointerup',stopDraw);pad.addEventListener('pointercancel',stopDraw);pad.addEventListener('lostpointercapture',stopDraw);
+if('ResizeObserver'in window)new ResizeObserver(resizePad).observe(pad);else addEventListener('resize',resizePad);
+$('penColor').addEventListener('input',()=>{penColor=$('penColor').value;document.querySelectorAll('.swatch').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.color===penColor)));});
+document.querySelectorAll('.swatch').forEach(b=>b.addEventListener('click',()=>{penColor=b.dataset.color;$('penColor').value=penColor;document.querySelectorAll('.swatch').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));}));
+$('penSize').addEventListener('input',()=>{penSize=+$('penSize').value;$('penSizeValue').textContent=penSize+' px';});
+$('undoBtn').addEventListener('click',()=>{if(strokes.length){redoStack.push(strokes.pop());drawStrokes();say('drawStatus','Last stroke undone.');}});
+$('redoBtn').addEventListener('click',()=>{if(redoStack.length){strokes.push(redoStack.pop());drawStrokes();say('drawStatus','Stroke restored.');}});
+$('clearBtn').addEventListener('click',()=>{strokes=[];redoStack=[];drawStrokes();say('drawStatus','Canvas cleared.');});
+function exportPng(transparent=true) {
+  if(!strokes.length) throw new Error('Draw a signature first.');
+  const out=document.createElement('canvas');
+  out.width=pad.width; out.height=pad.height;
+  const c=out.getContext('2d');
+  if(!c) throw new Error('Could not create PNG. Please reload the app and try again.');
+  // Canvas backing pixels are scaled by devicePixelRatio; set the transform only once.
+  c.setTransform(ratio,0,0,ratio,0,0);
+  if(!transparent){c.fillStyle='#fff';c.fillRect(0,0,cssW,cssH);}
+  for(const s of strokes){
+    if(!s.points.length) continue;
+    c.beginPath(); c.lineCap='round'; c.lineJoin='round';
+    c.globalCompositeOperation=s.erase?'destination-out':'source-over';
+    c.strokeStyle=s.color; c.lineWidth=s.width;
+    c.moveTo(s.points[0].x,s.points[0].y);
+    for(let i=1;i<s.points.length;i++) c.lineTo(s.points[i].x,s.points[i].y);
+    if(s.points.length===1) c.lineTo(s.points[0].x+.01,s.points[0].y+.01);
+    c.stroke();
+  }
+  c.globalCompositeOperation='source-over';
+  return out;
+}
+function downloadBlob(blob,name){
+  if(!blob || !blob.size) throw new Error('PNG file could not be created. Please try again.');
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a'); a.href=url; a.download=name; a.style.display='none';
+  document.body.appendChild(a);
+  try { a.click(); }
+  catch(e) { URL.revokeObjectURL(url); a.remove(); throw new Error('Download was blocked by the browser. Open this file in Chrome and try again.'); }
+  a.remove();
+  // Keep the object URL alive longer for mobile browsers that start downloads asynchronously.
+  setTimeout(()=>URL.revokeObjectURL(url),60000);
+}
+function downloadCanvasPng(canvas,name){
+  return new Promise((resolve,reject)=>{
+    if(typeof canvas.toBlob==='function'){
+      canvas.toBlob(blob=>{
+        if(blob){try{downloadBlob(blob,name);resolve();}catch(e){reject(e);} }
+        else {try{const data=canvas.toDataURL('image/png');const a=document.createElement('a');a.href=data;a.download=name;document.body.appendChild(a);a.click();a.remove();resolve();}catch(e){reject(new Error('PNG export failed. Please try again.'));}}
+      },'image/png');
+    } else {
+      try{const a=document.createElement('a');a.href=canvas.toDataURL('image/png');a.download=name;document.body.appendChild(a);a.click();a.remove();resolve();}catch(e){reject(new Error('PNG export failed. Please try again.'));}
+    }
+  });
+}
+$('downloadBtn').addEventListener('click',async()=>{
+  try { const canvas=exportPng(true); await downloadCanvasPng(canvas,'my-signature-transparent.png'); say('drawStatus','PNG export started. Check your Downloads folder.'); }
+  catch(e){say('drawStatus',e.message||'PNG download failed. Please try again.');}
+});
+function makeDataUrl(canvas){return canvas.toDataURL('image/png');}
+function addSaved(name) {
+  try {
+    const png=exportPng(true).toDataURL('image/png');
+    saved.unshift({id:Date.now().toString(36)+Math.random().toString(36).slice(2,7),name:(name||'My signature').trim().slice(0,50),png,created:new Date().toISOString()});
+    saved=saved.slice(0,20);
+    if(!persistSaved()){saved.shift();throw new Error('Browser storage is full. Download the PNG instead.');}
+    renderGallery();say('drawStatus','Signature saved in My signatures.');
+  } catch(e){say('drawStatus',e.message||'Could not save signature.');}
+}
+$('saveGalleryBtn').addEventListener('click',()=>{const name=prompt('Name this signature (optional):','My signature');if(name===null)return;addSaved(name||'My signature');});
+$('saveNamedBtn').addEventListener('click',()=>addSaved($('signatureName').value||'My signature'));
+function renderGallery(){
+  const g=$('gallery');g.innerHTML='';$('galleryEmpty').style.display=saved.length?'none':'block';
+  for(const s of saved){
+    const card=document.createElement('article');card.className='saved-card';
+    const img=document.createElement('img');img.src=s.png;img.alt='Saved signature: '+s.name;card.appendChild(img);
+    const title=document.createElement('div');title.className='saved-name';title.textContent=s.name;card.appendChild(title);
+    const date=document.createElement('div');date.className='saved-date';date.textContent=new Date(s.created).toLocaleDateString();card.appendChild(date);
+    const actions=document.createElement('div');actions.className='card-actions';
+    const use=document.createElement('button');use.className='btn secondary';use.textContent='Use';use.type='button';use.addEventListener('click',()=>{selectedSignature=s;syncPdfSignatures();showTab('pdf');say('pdfStatus','Signature selected. Choose a PDF.');});
+    const dl=document.createElement('button');dl.className='btn secondary';dl.textContent='PNG';dl.type='button';dl.addEventListener('click',()=>{fetch(s.png).then(r=>r.blob()).then(b=>downloadBlob(b,'signature-'+safeName(s.name)+'.png'));});
+    const del=document.createElement('button');del.className='btn secondary';del.textContent='Delete';del.type='button';del.addEventListener('click',()=>{if(confirm('Delete this saved signature?')){saved=saved.filter(x=>x.id!==s.id);persistSaved();renderGallery();syncPdfSignatures();}});
+    actions.append(use,dl,del);card.appendChild(actions);g.appendChild(card);
+  }
+  syncPdfSignatures();
+}
+function safeName(s){return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'saved';}
+let selectedSignature=null;
+function syncPdfSignatures(){
+  const sel=$('pdfSignature'),previous=selectedSignature?.id||sel.value;sel.innerHTML='';
+  if(!saved.length){sel.add(new Option('Save a signature first',''));selectedSignature=null;return;}
+  saved.forEach(s=>sel.add(new Option(s.name,s.id)));
+  const found=saved.find(s=>s.id===previous)||saved[0];sel.value=found.id;selectedSignature=found;
+}
+$('pdfSignature').addEventListener('change',()=>{selectedSignature=saved.find(s=>s.id===$('pdfSignature').value)||null;renderPdfPreview();});
+function showTab(tab){
+  document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
+  document.querySelectorAll('.section').forEach(s=>s.classList.toggle('active',s.id==='section-'+tab));
+  if(tab==='pdf')renderPdfPreview();
+}
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>showTab(b.dataset.tab)));
+$('themeToggle').addEventListener('click',()=>{const dark=document.documentElement.dataset.theme!=='dark';document.documentElement.dataset.theme=dark?'dark':'light';$('themeToggle').textContent=dark?'☀ Light mode':'☾ Dark mode';try{localStorage.setItem('signatureStudio.theme',dark?'dark':'light');}catch{}});
+try{if(localStorage.getItem('signatureStudio.theme')==='dark'){$('themeToggle').click();}}catch{}
+$('shareBtn').addEventListener('click',async()=>{
+ try{
+  const canvas=exportPng(true); const blob=await new Promise((resolve,reject)=>canvas.toBlob?canvas.toBlob(b=>b?resolve(b):reject(new Error('PNG creation failed.')),'image/png'):reject(new Error('PNG export is not supported in this browser.')));
+  const file=new File([blob],'my-signature.png',{type:'image/png'});
+  if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:'My signature'});say('drawStatus','Share sheet opened.');}
+  else{downloadBlob(blob,'my-signature-transparent.png');say('drawStatus','File sharing is not supported here; PNG downloaded instead.');}
+ }catch(e){if(e.name!=='AbortError')say('drawStatus',e.message||'Could not share PNG.');}
+});
+$('pdfFile').addEventListener('change',async e=>{
+ const file=e.target.files?.[0];if(!file)return;
+ if(!/pdf/i.test(file.type)&&!file.name.toLowerCase().endsWith('.pdf')){say('pdfStatus','Please choose a PDF file.');return;}
+ try{
+  say('pdfStatus','Loading PDF preview…');
+  currentPdfBytes=await file.arrayBuffer();
+  if(!window.pdfjsLib)throw new Error('PDF preview library could not load. Check your internet connection.');
+  pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  pdfDoc=await pdfjsLib.getDocument({data:currentPdfBytes.slice(0)}).promise;
+  $('pdfPage').max=pdfDoc.numPages;$('pdfPage').value=1;pdfPageNumber=1;
+  await renderPdfPreview();say('pdfStatus',`PDF loaded: ${pdfDoc.numPages} page(s). Tap preview to place signature.`);
+ }catch(err){pdfDoc=null;say('pdfStatus',err.message||'Could not open PDF.');}
+});
+async function renderPdfPreview(){
+ const preview=$('pdfPreview');if(!pdfDoc){preview.innerHTML='<div class="empty">Choose a PDF file to preview it here.</div>';return;}
+ pdfPageNumber=Math.max(1,Math.min(pdfDoc.numPages,Number($('pdfPage').value)||1));$('pdfPage').value=pdfPageNumber;
+ try{
+  const page=await pdfDoc.getPage(pdfPageNumber),viewport=page.getViewport({scale:Math.min(1.5,(preview.clientWidth-16)/page.getViewport({scale:1}).width)});
+  const cv=document.createElement('canvas');cv.width=Math.floor(viewport.width*1.5);cv.height=Math.floor(viewport.height*1.5);cv.style.width=viewport.width+'px';cv.style.height=viewport.height+'px';
+  await page.render({canvasContext:cv.getContext('2d'),viewport:page.getViewport({scale:viewport.scale*1.5})}).promise;
+  pdfPageCanvas=cv;preview.innerHTML='';preview.appendChild(cv);drawPdfSignatureOverlay();
+ }catch(err){say('pdfStatus','Could not render page: '+err.message);}
+}
+$('pdfPage').addEventListener('change',renderPdfPreview);
+$('pdfSize').addEventListener('input',()=>{$('pdfSizeValue').textContent=$('pdfSize').value+'%';drawPdfSignatureOverlay();});
+function drawPdfSignatureOverlay(){
+ const old=$('signatureOverlay');if(old)old.remove();
+ if(!pdfPageCanvas||!selectedSignature)return;
+ const preview=$('pdfPreview'),r=pdfPageCanvas.getBoundingClientRect(),pr=preview.getBoundingClientRect();
+ const img=document.createElement('img');img.id='signatureOverlay';img.src=selectedSignature.png;img.alt='Signature placement';img.draggable=false;
+ img.style.cssText='position:absolute;z-index:3;pointer-events:none;object-fit:contain;background:transparent;';
+ const w=Math.max(48,r.width*(+$('pdfSize').value/100));img.style.width=w+'px';img.style.height=(w*.36)+'px';img.style.left=(pdfPageCanvas.offsetLeft+sigX*r.width-w/2)+'px';img.style.top=(pdfPageCanvas.offsetTop+sigY*r.height-w*.18)+'px';preview.appendChild(img);
+}
+$('pdfPreview').addEventListener('pointerdown',e=>{
+ if(!pdfPageCanvas||!selectedSignature)return;
+ const r=pdfPageCanvas.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)return;
+ $('pdfPreview').setPointerCapture?.(e.pointerId);sigDragging=true;sigX=(e.clientX-r.left)/r.width;sigY=(e.clientY-r.top)/r.height;drawPdfSignatureOverlay();
+});
+$('pdfPreview').addEventListener('pointermove',e=>{
+ if(!sigDragging||!pdfPageCanvas)return;const r=pdfPageCanvas.getBoundingClientRect();sigX=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width));sigY=Math.max(0,Math.min(1,(e.clientY-r.top)/r.height));drawPdfSignatureOverlay();
+});
+$('pdfPreview').addEventListener('pointerup',()=>sigDragging=false);$('pdfPreview').addEventListener('pointercancel',()=>sigDragging=false);
+$('centerSigBtn').addEventListener('click',()=>{sigX=.5;sigY=.58;drawPdfSignatureOverlay();});
+$('exportPdfBtn').addEventListener('click',async()=>{
+ if(!currentPdfBytes||!pdfDoc){say('pdfStatus','Choose a PDF first.');return;}
+ if(!selectedSignature){say('pdfStatus','Save or select a signature first.');return;}
+ if(!window.PDFLib){say('pdfStatus','PDF export library could not load. Check your internet connection.');return;}
+ try{
+  say('pdfStatus','Creating signed PDF…');
+  const {PDFDocument}=PDFLib;const doc=await PDFDocument.load(currentPdfBytes);const pages=doc.getPages();const index=Math.max(0,Math.min(pages.length-1,(Number($('pdfPage').value)||1)-1));const page=pages[index];const {width,height}=page.getSize();
+  const pngBytes=await (await fetch(selectedSignature.png)).arrayBuffer();const png=await doc.embedPng(pngBytes);
+  const drawW=width*(+$('pdfSize').value/100);const drawH=drawW*(png.height/png.width);
+  // Preview coordinates are fractions of the visible page; PDF origin is bottom-left.
+  const x=Math.max(0,Math.min(width-drawW,sigX*width-drawW/2));const y=Math.max(0,Math.min(height-drawH,(1-sigY)*height-drawH/2));
+  page.drawImage(png,{x,y,width:drawW,height:drawH});
+  const bytes=await doc.save();downloadBlob(new Blob([bytes],{type:'application/pdf'}),'signed-document.pdf');
+  say('pdfStatus','Signed PDF download started.');
+ }catch(err){say('pdfStatus','Export failed: '+(err.message||'Please try another PDF.'));}
+});
+renderGallery();resizePad();
+})();
+</script>
+</body>
+</html>
